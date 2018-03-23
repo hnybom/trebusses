@@ -125,9 +125,15 @@ class BusRouterSpeechlet : SpeechletV2 {
             return ResponseUtil.getAskResponse("Bus schedules", "No busses leaving at the moment sorry")
         }
 
+        val sb = buildAnswer(busLinesScheduleContainers, busLineNumber)
+
+        return ResponseUtil.getAskResponse("Bus schedules", sb.toString())
+    }
+
+    private fun buildAnswer(busLinesScheduleContainers: List<Pair<String, List<BusStopSchedule>>>, busLineNumber: String?): StringBuilder {
         val sb = StringBuilder()
 
-        busLinesScheduleContainers.forEach( {
+        busLinesScheduleContainers.forEach({
 
             sb.append("Next number $busLineNumber busses to the direction of ${it.first} are leaving from ")
 
@@ -136,17 +142,15 @@ class BusRouterSpeechlet : SpeechletV2 {
 
                 var i = 0
 
-                while(i < busStopSchedule.departures.size && i < 3) {
+                while (i < busStopSchedule.departures.size && i < 3) {
                     sb.append("${busStopSchedule.departures[i].time} ")
                     i++
                 }
 
-                if(index < it.second.size - 1) sb.append(" and from ")
+                if (index < it.second.size - 1) sb.append(" and from ")
             }
         })
-
-
-        return ResponseUtil.getAskResponse("Bus schedules", sb.toString())
+        return sb
     }
 
     private fun getDeviceInfo(requestEnvelope: SpeechletRequestEnvelope<IntentRequest>): Triple<String, String, String> {
