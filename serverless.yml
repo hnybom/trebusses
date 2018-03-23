@@ -1,0 +1,18 @@
+service: trebusses
+
+provider:
+  name: aws
+  region: eu-west-1
+  runtime: java8
+
+package:
+      artifact: target/trebusses-1.0-SNAPSHOT.jar
+
+functions:
+  busses:
+    runtime: java8
+    handler: fi.solita.hnybom.trebusses.BusRouterRequestStreamHandler
+    memorySize: 1024
+    timeout: 60
+    events:
+      - alexaSkill
