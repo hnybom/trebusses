@@ -24,7 +24,7 @@
     </repositories>
 
     <properties>
-        <kotlin.version>1.2.21</kotlin.version>
+        <kotlin.version>1.6.0</kotlin.version>
         <aws.ask.version>1.8.1</aws.ask.version>
     </properties>
 
